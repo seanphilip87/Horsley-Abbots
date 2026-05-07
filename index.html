@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>The Horsley Abbots Murders</title>
-    <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#111312">
-<link rel="apple-touch-icon" href="icon-192.png">
     
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#111312">
+    <link rel="apple-touch-icon" href="icon-192.png">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
@@ -60,7 +61,6 @@
             pointer-events: none; z-index: 2; opacity: 0.5;
         }
 
-        /* Standard Hunted Animation */
         @keyframes heartbeat {
             0%, 100% { box-shadow: inset 0 0 50px rgba(255, 92, 92, 0.1); transform: scale(1); }
             15% { box-shadow: inset 0 0 120px rgba(255, 92, 92, 0.4); transform: scale(1.01); }
@@ -69,7 +69,6 @@
         }
         body.hunted { animation: heartbeat 0.85s infinite; }
 
-        /* The 'Weapon Pickup' Panic State */
         body.jeopardy-active { animation: jeopardy-shake 0.3s infinite; }
         @keyframes jeopardy-shake {
             0%, 100% { transform: translate(0, 0); }
@@ -264,15 +263,18 @@
         <div class="card-behind"></div>
     </div>
 
+    <script src="data.js"></script>
+
     <script>
         function vib(pattern) { if (navigator.vibrate) navigator.vibrate(pattern); }
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
-            .then(reg => console.log('Service Worker registered'))
-            .catch(err => console.log('Service Worker failed', err));
-    });
-}
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker failed', err));
+            });
+        }
 
         const AudioSys = {
             ctx: null, drone: null, gain: null, heartbeatInterval: null,
@@ -351,64 +353,11 @@ if ('serviceWorker' in navigator) {
             }
         };
 
+        // Static Variables remaining in index.html
         const maleNames = ["Nigel", "Ian", "Keith", "Colin", "Gary", "Trevor", "Clive", "Barry", "Gordon"];
         const femaleNames = ["Maureen", "Brenda", "Beryl", "Deirdre", "Pamela", "Susan", "Sharon", "Pauline", "Janet"];
         const surnames = ["Gristle", "Faffingdale", "Goblet", "Plop", "Trotter", "Snitch", "Slurry", "Bogtrotter", "Scab", "Wattle"];
         const suspectColors = ['#8a3324', '#6b8e23', '#483d8b', '#bdaa55', '#778899', '#2f4f4f'];
-
-        const suspectArchetypes = [
-            { role: "The Barmaid", gender: "female", desc: "A matronly woman with faded blue tattoos." },
-            { role: "The Vicar", gender: "male", desc: "Clutching a Bible, sweating profusely." },
-            { role: "The Chef", gender: "male", desc: "Wearing a pristine white jacket." },
-            { role: "The Butcher", gender: "male", desc: "Producing wet, guttural vibrations. Hands the size of hams." },
-            { role: "The Mini-Mart Owner", gender: "female", desc: "Wearing oversized sunglasses, walking on eggshells." },
-            { role: "The Busybody", gender: "female", desc: "Thin as a rake, wearing a rattling necklace of human teeth." }
-        ];
-
-        const motives = [
-            "Lord Blackwood threatened to report a secret collection of Dutch pornography.", 
-            "Lord Blackwood heavily insulted a reconstructed pigeon's anus ragu.",
-            "Lord Blackwood discovered what was really in the 'Miscellaneous Trimmings' tray.", 
-            "Lord Blackwood threatened to publish photos of unglamorous, thick ankles.",
-            "Lord Blackwood refused to eat the WI flapjacks, an absolute insult.", 
-            "Lord Blackwood witnessed an embarrassing incident of weeping in the vestry."
-        ];
-
-        const deathTypes = [
-            { type: 'slash', desc: "His throat had been raggedly cut.", coroner: "Deep lacerations." },
-            { type: 'blunt', desc: "His skull was thoroughly caved in.", coroner: "Massive blunt force trauma." },
-            { type: 'strangle', desc: "His neck was heavily bruised from vicious strangulation.", coroner: "Asphyxiation via ligature." }
-        ];
-
-        const allItemsData = [
-            {name:"Rusted Cleaver",desc:"A brutal, unsanitary weapon from Faffingdales.", type:"slash"},
-            {name:"Broken Gin Bottle",desc:"Shattered glass. Smells of cheap regret.", type:"slash"},
-            {name:"Rock-Hard Flapjack",desc:"A WI baked good. Banned under the Geneva Convention.", type:"blunt"},
-            {name:"Shattered Stump",desc:"A rotting piece of wood from the cricket pitch.", type:"blunt"},
-            {name:"Rusty Fan Belt",desc:"A greasy, tough rubber loop from an old tractor.", type:"strangle"},
-            {name:"Frayed Bell Pull",desc:"Stolen from the Manor. Thick, dusty rope.", type:"strangle"}
-        ];
-
-        const frictionTypes = [
-            { id: 'wellies', icon: '👢', name: "Wellington Boots", desc: "A pair of sturdy rubber boots. Essential for flooded areas.", blockReason: "flooded", blockMsg: "The path is a swamp of stinking mud. Stetson needs proper waterproof footwear to enter." },
-            { id: 'key', icon: '🗝️', name: "Rusty Iron Key", desc: "A heavy, rusted key. Unlocks archaic doors.", blockReason: "locked", blockMsg: "The heavy oak door is bolted shut with an ancient lock. Stetson needs a key to force it open." },
-            { id: 'lantern', icon: '🏮', name: "Heavy Lantern", desc: "A soot-stained lantern. Illuminates the darkest gloom.", blockReason: "dark", blockMsg: "The room is pitch black. Stetson cannot see his own hand. He needs a light source to enter." }
-        ];
-
-        const theme = {
-            victim: "Lord Reginald Blackwood",
-            rooms: [
-                { id: '1', name: "Village Hall", desc: "Draughty floorboards groan beneath 1977 Jubilee bunting.", searchEmpty: "Stetson kicked a pile of ancient dust. 'Completely undisturbed.'", searchClue: "Stetson nudged a discarded leaflet. 'Someone was scurrying around in here recently.'" },
-                { id: '2', name: "The Gloved Fist", desc: "Ancient shrivelled puddings hang above the soot-choked fire.", searchEmpty: "Stetson poked the sleeping regular. He didn't stir. Floor smooth.", searchClue: "Stetson squinted at a spilled pint. 'Two sets of prints. A clandestine meeting.'" },
-                { id: '3', name: "Churchyard", desc: "Yew trees claw at the grey sky. An open, flooded grave sits in the centre.", searchEmpty: "Stetson peered into the flooded grave. The muddy banks were pristine.", searchClue: "Stetson spotted a crushed cigarette butt. 'Someone was pacing here, nervously.'" },
-                { id: '4', name: "Manor House", desc: "A sprawling corpse of a building. An indoor waterfall pours through the ruined roof.", searchEmpty: "The mould on the floor formed a perfect, unbroken carpet.", searchClue: "Stetson pointed his cane at a torn velvet curtain. 'Freshly ripped.'" },
-                { id: '5', name: "Mini-Mart", desc: "Strip lighting hums. Shelves stock expired yoghurt.", searchEmpty: "Stetson inspected the aisle of tinned peaches. The layer of grime was totally intact.", searchClue: "Stetson picked up a dropped receipt. 'Someone was lingering near the pickled walnuts.'" },
-                { id: '6', name: "Play Park", desc: "A single rope swing and a rusty slide. No children since 1994.", searchEmpty: "The glass-filled dirt beneath the swing was smooth. 'Bleak. And empty.'", searchClue: "Stetson knelt, his knees cracking. 'Fresh heel marks by the rusty slide.'" },
-                { id: '7', name: "Faffingdales", desc: "A butcher's shop. 'Miscellaneous Trimmings' twitch in the window.", searchEmpty: "The bone-meal sawdust on the floor was swept perfectly clean.", searchClue: "Stetson tapped a bloody bootprint. 'Not animal blood.'" },
-                { id: '8', name: "Peacock's Queef", desc: "A stark, white-walled nightmare of Michelin-starred culinary arrogance.", searchEmpty: "The minimalist white tiles were gleaming and untouched.", searchClue: "Stetson found a smudge of mud on a pristine white tablecloth. 'They left a trace.'" },
-                { id: '9', name: "Cricket Pavilion", desc: "A leaning wooden shack smelling of linseed oil and failure.", searchEmpty: "Stetson examined the rotten benches. The cobwebs were unbroken.", searchClue: "Stetson picked up a shattered cricket stump. 'Moved recently.'" }
-            ]
-        };
 
         const state = {
             turns: 0, currentContext: '', tempPayload: null, turnEvents: [],
@@ -507,7 +456,7 @@ if ('serviceWorker' in navigator) {
                     name: `${fName} ${sNamesLast[i]}`, role: sData[i].role, desc: sData[i].desc, color: sCols[i], 
                     sub: isMale ? 'he' : 'she', obj: isMale ? 'him' : 'her', pos: isMale ? 'his' : 'her',
                     motive: sMotives[i], isMurderer: (i === 0), hasMet: false, clammedNormal: false, clammed: false,
-                    roomId: suspectRooms[i]
+                    roomId: suspectRooms[i], dialogue: sData[i].dialogue // Attach the new dialogue tree from data.js
                 });
             }
 
@@ -540,20 +489,24 @@ if ('serviceWorker' in navigator) {
                 let others = state.suspects.filter(o => o !== s);
                 
                 let gossipTarget = others[Math.floor(Math.random() * others.length)];
-                let gossipStr = `${gossipTarget.name.split(' ')[0]} ${stories.pop()}. Sad, really.`;
+                let gossipRaw = stories.pop();
+                let gossipText = s.dialogue.formatGossip.replace('{target}', gossipTarget.name.split(' ')[0]).replace('{gossip}', gossipRaw);
 
                 let motiveTarget = others[Math.floor(Math.random() * others.length)];
-                let motiveStr = `I know for a fact ${motiveTarget.name.split(' ')[0]} had a reason: ${motiveTarget.motive}`;
+                let knownMotiveText = s.dialogue.formatKnownMotive.replace('{target}', motiveTarget.name.split(' ')[0]).replace('{motive}', motiveTarget.motive);
 
                 let alibiTarget = others[Math.floor(Math.random() * others.length)];
-                let alibiStr = `I heard ${alibiTarget.name.split(' ')[0]} claims: "${alibiTarget.myAlibi}"`;
+                let knownAlibiText = s.dialogue.formatKnownAlibi.replace('{target}', alibiTarget.name.split(' ')[0]).replace('{alibi}', alibiTarget.myAlibi);
+
+                let ownMotiveText = s.dialogue.formatOwnMotive.replace('{motive}', s.motive);
+                let ownAlibiText = s.dialogue.formatOwnAlibi.replace('{alibi}', s.myAlibi);
 
                 s.infoPool = shuffle([
-                    { type: 'alibi', label: 'Their Alibi', text: s.myAlibi },
-                    { type: 'motive', label: 'Their Secret', text: `Fine, yes. ${s.motive} But I'm no killer.` },
-                    { type: 'gossip', label: 'Irrelevant Gossip', text: gossipStr },
-                    { type: 'known_motive', label: `${motiveTarget.name.split(' ')[0]}'s Motive`, text: motiveStr },
-                    { type: 'known_alibi', label: `${alibiTarget.name.split(' ')[0]}'s Alibi`, text: alibiStr }
+                    { type: 'alibi', label: 'Their Alibi', text: ownAlibiText },
+                    { type: 'motive', label: 'Their Secret', text: ownMotiveText },
+                    { type: 'gossip', label: 'Irrelevant Gossip', text: gossipText },
+                    { type: 'known_motive', label: `${motiveTarget.name.split(' ')[0]}'s Motive`, text: knownMotiveText },
+                    { type: 'known_alibi', label: `${alibiTarget.name.split(' ')[0]}'s Alibi`, text: knownAlibiText }
                 ]);
                 s.revealedData = [];
                 s.normalReveals = 0;
@@ -815,8 +768,12 @@ if ('serviceWorker' in navigator) {
 
                 if (payload.isStart) {
                     state.stats.pplSpoken.add(s.name);
-                    if (!s.hasMet) { responseHtml = `<div class="desc-text">${s.name}, ${s.role}. ${s.desc}</div><p>Stetson cornered ${s.obj} for a chat.</p>`; s.hasMet = true; } 
-                    else responseHtml = `<p>Stetson approached ${s.name.split(' ')[0]} once again.</p>`;
+                    if (!s.hasMet) { 
+                        responseHtml = `<div class="desc-text">${s.name}, ${s.role}.</div><p>${s.dialogue.meetFirst}</p>`; 
+                        s.hasMet = true; 
+                    } else { 
+                        responseHtml = `<p>${s.dialogue.meetAgain}</p>`; 
+                    }
                 } else responseHtml = payload.responseHtml;
 
                 html = `<div class="card-header" style="color:${s.color}">Interrogation</div><div class="card-title">${s.name}</div><div class="card-body">${responseHtml}</div>`;
@@ -971,12 +928,16 @@ if ('serviceWorker' in navigator) {
                 if (s.normalReveals >= 2) {
                     s.clammedNormal = true; 
                     AudioSys.playSnap();
-                    text = `<div class="dialogue">"I've answered enough of your tedious questions! I'm not saying another word to you unless you force it out of me!"</div><p class="danger-text">They cross their arms. Polite questioning is completely useless now.</p>`;
+                    text = `<div class="dialogue">${s.dialogue.clamNormal}</div><p class="danger-text">Polite questioning is completely useless now.</p>`;
                 } else {
                     let info = s.infoPool.pop();
                     s.revealedData.push(info);
+                    
+                    let wrapper = s.dialogue.politeWrappers[s.normalReveals % s.dialogue.politeWrappers.length];
+                    let formattedLine = wrapper.replace('{info}', info.text);
+                    
                     s.normalReveals++;
-                    text = `<p>Stetson adjusted his sandwich and grunted a question.</p><div class="dialogue">"${info.text}"</div>`;
+                    text = `<p>Stetson adjusted his sandwich and grunted a question.</p><div class="dialogue">${formattedLine}</div>`;
                 }
             } else {
                 vib(50); state.stats.insults++; 
@@ -990,12 +951,16 @@ if ('serviceWorker' in navigator) {
 
                 if (s.deepReveals >= 2 || s.infoPool.length === 0) {
                     s.clammed = true; AudioSys.playSnap();
-                    text += `<p class="sys-text danger-text">WARNING: Pushed too far...</p><div class="dialogue">"You absolute monster! I'm not speaking to you ever again!"</div><p class="danger-text">They are completely shut down.</p>`;
+                    text += `<p class="sys-text danger-text">WARNING: Pushed too far...</p><div class="dialogue">${s.dialogue.clamDeep}</div><p class="danger-text">They are completely shut down.</p>`;
                 } else {
                     let info = s.infoPool.pop();
                     s.revealedData.push(info);
+                    
+                    let insultData = s.dialogue.insultWrappers[s.deepReveals % s.dialogue.insultWrappers.length];
+                    let formattedResponse = insultData.response.replace('{info}', info.text);
+                    
                     s.deepReveals++;
-                    text += `<p class="sys-text danger-text">Stetson hurled a deeply personal insult.</p><div class="dialogue">"You vile pig! Fine! ${info.text}"</div>`;
+                    text += `<p class="sys-text danger-text">${insultData.stetson}</p><div class="dialogue">${formattedResponse}</div>`;
                 }
             }
 
