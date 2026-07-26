@@ -18,7 +18,7 @@
             --bg-color: #111312; 
             --card-bg: #1c211e;
             --text-main: #c4c9c5; 
-            --text-muted: #79857d;
+            --text-muted: #9ca6a0; /* Updated for better contrast */
             --accent-gold: #ffd257; 
             --danger-red: #ff5c5c; 
             --success-green: #7fd966;
@@ -100,6 +100,12 @@
         }
         body.shake #card-container { animation: shake 0.4s; }
 
+        @keyframes pulse-card {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.02) rotate(1deg); box-shadow: 0 0 25px rgba(255, 210, 87, 0.3); border-color: var(--accent-gold); }
+        }
+        .pulse-hint { animation: pulse-card 1.5s ease-in-out 3; }
+
         .fullscreen-overlay {
             position: absolute; top: 0; left: 0; right: 0; bottom: 0; 
             background: rgba(17, 19, 18, 0.95); z-index: 1000; 
@@ -141,7 +147,10 @@
         .stat-item { background: rgba(255,255,255,0.05); padding: 10px 8px; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;}
         .stat-val { color: var(--text-main); font-weight: bold; }
 
-        #top-bar { display: flex; justify-content: space-between; align-items: center; padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px; font-family: var(--font-ui); font-size: clamp(0.65em, 2vw, 0.75em); font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; z-index: 100;}
+        #top-bar { display: flex; justify-content: space-between; align-items: center; padding: max(15px, env(safe-area-inset-top)) 20px 10px 20px; font-family: var(--font-ui); font-size: clamp(0.65em, 2vw, 0.75em); font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; z-index: 100; gap: 10px;}
+        .top-left { flex: 1; display:flex; gap:8px; align-items:center; }
+        .top-center { flex: 1; text-align: center; white-space: nowrap; line-height: 1.2; }
+        .top-right { flex: 1; display: flex; justify-content: flex-end; gap: 8px; }
         #top-bar span.active { color: var(--accent-gold); text-shadow: 0 0 10px rgba(255, 210, 87, 0.4); }
         .sandwich-btn { background: rgba(255, 210, 87, 0.15); border: 1px solid var(--accent-gold); padding: 8px 12px; border-radius: 6px; color: var(--accent-gold); cursor: pointer; display: flex; align-items: center; gap: 5px; min-height: 38px; transition: all 0.2s; z-index: 100;}
         .sandwich-btn:active { transform: scale(0.9); }
@@ -171,28 +180,33 @@
         .card-title { font-size: clamp(1.8em, 7vw, 2.2em); font-weight: 700; color: var(--text-main); margin-bottom: 15px; line-height: 1.1; }
         .card-body { font-size: 1.1em; line-height: 1.5; color: var(--text-main); flex-grow: 1; overflow-y: auto; padding-right: 5px;}
         .card-body p { margin-top: 0; margin-bottom: 15px; }
+        
+        .stetson-dialogue { font-style: italic; font-weight: 600; color: var(--danger-red); margin-bottom: 10px; font-size: 0.95em; }
         .dialogue { font-style: italic; color: #fff; border-left: 3px solid var(--accent-gold); margin: 15px 0; background: rgba(0,0,0,0.25); padding: 12px 15px; border-radius: 0 4px 4px 0;}
         .desc-text { color: var(--text-muted); font-style: italic; font-size: 0.9em; margin-bottom: 15px;}
+        
         .entity-list { margin-top: 15px; font-family: var(--font-ui); font-size: 0.85em; }
         .entity-item { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 4px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(255,255,255,0.03);}
         .danger-text { color: var(--danger-red); font-weight: 700; text-shadow: 0 0 5px rgba(255,92,92,0.3); }
         .sys-text { color: var(--text-muted); font-family: var(--font-ui); font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px;}
         
-        .card-img-container { width: 100%; height: 200px; border-radius: 6px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+        .card-img-container { width: 100%; height: 200px; border-radius: 6px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; background: rgba(0,0,0,0.5);}
+        .card-img-container.portrait { height: 240px; }
         .card-img { width: 100%; height: 100%; object-fit: cover; }
+        .card-img-container.portrait .card-img { object-fit: contain; }
 
         .swipe-stamp {
-            position: absolute; padding: 8px 12px; border: 3px solid var(--text-main);
-            color: var(--text-main); font-family: var(--font-ui); font-size: 1.2em;
-            font-weight: 800; text-transform: uppercase; border-radius: 6px;
+            position: absolute; padding: 6px 16px; border: 1px solid var(--text-main);
+            color: var(--text-main); font-family: var(--font-ui); font-size: 0.9em;
+            font-weight: 800; text-transform: uppercase; border-radius: 20px;
             opacity: 0; z-index: 100; pointer-events: none; letter-spacing: 1px;
-            background: rgba(17,19,18,0.9); box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-            text-align: center; line-height: 1.1; max-width: 80%;
+            background: rgba(17,19,18,0.95); box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            text-align: center; line-height: 1.2; white-space: nowrap;
         }
-        .stamp-right { top: 30px; left: 20px; border-color: var(--success-green); color: var(--success-green); transform: rotate(-10deg); }
-        .stamp-left { top: 30px; right: 20px; border-color: var(--danger-red); color: var(--danger-red); transform: rotate(10deg); }
-        .stamp-up { bottom: 30px; left: 50%; transform: translateX(-50%); border-color: var(--accent-gold); color: var(--accent-gold); }
-        .stamp-down { top: 30px; left: 50%; transform: translateX(-50%); border-color: #888; color: #ccc; }
+        .stamp-right { top: 50%; right: 10px; transform: translateY(-50%); border-color: var(--success-green); color: var(--success-green); left: auto; }
+        .stamp-left { top: 50%; left: 10px; transform: translateY(-50%); border-color: var(--danger-red); color: var(--danger-red); right: auto; }
+        .stamp-up { top: 10px; left: 50%; transform: translateX(-50%); border-color: var(--accent-gold); color: var(--accent-gold); bottom: auto; }
+        .stamp-down { bottom: 10px; left: 50%; transform: translateX(-50%); border-color: #888; color: #ccc; top: auto; }
     </style>
 </head>
 <body>
@@ -242,9 +256,9 @@
     </div>
 
     <div id="top-bar">
-        <div style="flex: 1; display:flex; gap:8px; align-items:center;" id="inv-icons"></div> 
-        <div style="flex: 1; text-align: center;">Hostility:<br><span id="suspicion-text" class="active" style="color:var(--success-green);">CORDIAL</span></div>
-        <div style="flex: 1; display: flex; justify-content: flex-end; gap: 8px;">
+        <div class="top-left" id="inv-icons"></div> 
+        <div class="top-center">Hostility:<br><span id="suspicion-text" class="active" style="color:var(--success-green);">CORDIAL</span></div>
+        <div class="top-right">
             <div id="btn-music" class="sandwich-btn" onclick="toggleMusic()">🔊</div>
             <div id="btn-sandwich" class="sandwich-btn" onclick="eatSandwich()">🥪 <span id="sandwich-count">3</span></div>
         </div>
@@ -324,6 +338,17 @@
                 g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.3);
                 osc.connect(g); g.connect(this.ctx.destination);
                 osc.start(); osc.stop(this.ctx.currentTime + 0.3);
+            },
+            playCardSlide() {
+                if(!this.ctx) return;
+                let osc = this.ctx.createOscillator(); let g = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(100, this.ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(20, this.ctx.currentTime + 0.1);
+                g.gain.setValueAtTime(0.05, this.ctx.currentTime);
+                g.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+                osc.connect(g); g.connect(this.ctx.destination);
+                osc.start(); osc.stop(this.ctx.currentTime + 0.1);
             },
             setHeartbeat(active) {
                 if (active && !this.heartbeatInterval) {
@@ -558,8 +583,34 @@
             updateHUD(); generateCard('room_idle');
         }
 
+        let sandwichConfirm = false;
         window.eatSandwich = function() {
             if (state.sandwichBites <= 0 || state.gameOver) return;
+            
+            let btn = document.getElementById('btn-sandwich');
+            
+            if (!sandwichConfirm) {
+                sandwichConfirm = true;
+                let oldText = btn.innerHTML;
+                btn.innerHTML = "SURE? 🥪";
+                btn.style.background = "var(--danger-red)";
+                btn.style.color = "#111";
+                
+                setTimeout(() => {
+                    if (sandwichConfirm) {
+                        sandwichConfirm = false;
+                        btn.innerHTML = oldText;
+                        btn.style.background = "rgba(255, 210, 87, 0.15)";
+                        btn.style.color = "var(--accent-gold)";
+                    }
+                }, 2000);
+                return;
+            }
+            
+            sandwichConfirm = false;
+            btn.style.background = "rgba(255, 210, 87, 0.15)";
+            btn.style.color = "var(--accent-gold)";
+
             state.sandwichBites--; state.stats.sandwichEaten++;
             state.suspicion = Math.max(0, state.suspicion - 15);
             AudioSys.playSmack(); vib([50, 100, 50]);
@@ -568,8 +619,9 @@
         }
 
         function updateHUD() {
-            document.getElementById('sandwich-count').innerText = state.sandwichBites;
-            if(state.sandwichBites === 0) document.getElementById('btn-sandwich').classList.add('disabled');
+            let btn = document.getElementById('btn-sandwich');
+            if (!sandwichConfirm) btn.innerHTML = `🥪 <span id="sandwich-count">${state.sandwichBites}</span>`;
+            if(state.sandwichBites === 0) btn.classList.add('disabled');
             
             let iconsHtml = '';
             if (state.hasMagnifier) iconsHtml += `<span title="Forensic Lens" style="font-size:1.2em;">🔍</span>`;
@@ -661,7 +713,7 @@
                 html = `<div class="card-header danger-text">HUNTED!</div>
                 <div class="card-title">Ambushed!</div>
                 <div class="card-body">
-                <div class="card-img-container"><img src="assets/${killer.img}" class="card-img"></div>
+                <div class="card-img-container portrait"><img src="assets/${killer.img}" class="card-img"></div>
                 <p>The damp air grew suddenly thick. The only exit was blocked.</p>
                 <p><span style="color:${killer.color}; font-weight:bold;">${killer.name}</span> stepped out of the gloom, eyes burning with murderous intent.</p>
                 <div class="dialogue">"I've had enough of you, Hinchfliffe. It ends here."</div>
@@ -793,7 +845,7 @@
                 } else responseHtml = payload.responseHtml;
 
                 html = `<div class="card-header" style="color:${s.color}">Interrogation</div><div class="card-title">${s.name}</div><div class="card-body">`;
-                if (s.img) html += `<div class="card-img-container"><img src="assets/${s.img}" class="card-img"></div>`;
+                if (s.img) html += `<div class="card-img-container portrait"><img src="assets/${s.img}" class="card-img"></div>`;
                 html += `${responseHtml}</div>`;
                 
                 if (s.clammed) {
@@ -831,7 +883,7 @@
                 html = `<div class="card-header danger-text">GRAND ASSEMBLY (1/2)</div>
                         <div class="card-title" style="color:${s.color}">${s.name}</div>
                         <div class="card-body">`;
-                if (s.img) html += `<div class="card-img-container"><img src="assets/${s.img}" class="card-img"></div>`;
+                if (s.img) html += `<div class="card-img-container portrait"><img src="assets/${s.img}" class="card-img"></div>`;
                 html += `<p class="desc-text">${s.role}</p>
                             ${notesHtml}
                             <p>Is this the killer? Select carefully.</p>
@@ -846,7 +898,7 @@
                 let nextIdx = (idx + 1) % motives.length; let prevIdx = (idx - 1 + motives.length) % motives.length;
 
                 html = `<div class="card-header danger-text">GRAND ASSEMBLY (2/2)</div><div class="card-title">The Motive</div><div class="card-body">`;
-                if (state.tempAccused.img) html += `<div class="card-img-container"><img src="assets/${state.tempAccused.img}" class="card-img"></div>`;
+                if (state.tempAccused.img) html += `<div class="card-img-container portrait"><img src="assets/${state.tempAccused.img}" class="card-img"></div>`;
                 html += `<p class="desc-text">Accusing: ${state.tempAccused.name}</p><div class="dialogue">"${m}"</div><p>Is this why they did it?</p></div>`;
                 
                 state.swipeActions.up = { text: "FINALIZE ACCUSATION", action: () => doFinalAccusation(state.tempAccused, m) };
@@ -868,7 +920,7 @@
             }
 
             updatePersistentHints();
-            renderCardDOM(html);
+            renderCardDOM(html, context);
         }
 
         function doMoveSelect() { state.stats.moves++; generateCard('move_select'); }
@@ -981,7 +1033,7 @@
                     let formattedResponse = insultData.response.replace('{info}', info.text);
                     
                     s.deepReveals++;
-                    text += `<p class="sys-text danger-text">${insultData.stetson}</p><div class="dialogue">${formattedResponse}</div>`;
+                    text += `<p class="stetson-dialogue">${insultData.stetson}</p><div class="dialogue">${formattedResponse}</div>`;
                 }
             }
 
@@ -1089,7 +1141,7 @@
             document.getElementById('end-screen').classList.remove('hidden');
         }
 
-        function renderCardDOM(html) {
+        function renderCardDOM(html, context) {
             const container = document.getElementById('card-container');
             let oldCard = document.getElementById('active-card');
             if (oldCard) oldCard.remove();
@@ -1097,6 +1149,11 @@
             let card = document.createElement('div'); 
             card.className = 'swipe-card'; 
             card.id = 'active-card'; 
+            
+            // Add educational pulse to the very first location card
+            if (state.turns === 0 && context === 'room_idle') {
+                card.classList.add('pulse-hint');
+            }
             
             let stampsHtml = '';
             if(state.swipeActions.up) stampsHtml += `<div class="swipe-stamp stamp-up" id="stamp-up">${state.swipeActions.up.text}</div>`;
@@ -1115,6 +1172,7 @@
             const { signal } = currentSwipeController;
 
             let startX = 0, startY = 0; let isDragging = false; const threshold = 100; 
+            let isScrollGesture = false;
 
             const stampRight = card.querySelector('#stamp-right');
             const stampLeft = card.querySelector('#stamp-left');
@@ -1127,6 +1185,18 @@
                 left: document.getElementById('hint-left'), 
                 right: document.getElementById('hint-right') 
             };
+            
+            let cardBody = card.querySelector('.card-body');
+            let needsScroll = cardBody && cardBody.scrollHeight > cardBody.clientHeight + 5;
+            let hasRead = !needsScroll;
+            
+            if (needsScroll) {
+                cardBody.addEventListener('scroll', () => {
+                    if (cardBody.scrollTop + cardBody.clientHeight >= cardBody.scrollHeight - 5) {
+                        hasRead = true;
+                    }
+                }, { signal });
+            }
 
             function updateHintVisuals(dx, dy) {
                 if(stampRight) stampRight.style.opacity = Math.max(0, dx / 100);
@@ -1146,7 +1216,21 @@
 
             function processSwipe(dx, dy) {
                 let actionToTake = null; let throwX = 0, throwY = 0;
-                if (Math.abs(dx) > Math.abs(dy)) {
+                let isVertical = Math.abs(dy) > Math.abs(dx);
+                
+                // Enforce reading for vertical swipes on heavy text cards
+                if (isVertical && !hasRead) {
+                    card.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'; 
+                    card.style.transform = 'translate(0px, 0px) rotate(0deg)';
+                    if(stampRight) stampRight.style.opacity = 0;
+                    if(stampLeft) stampLeft.style.opacity = 0;
+                    if(stampDown) stampDown.style.opacity = 0;
+                    if(stampUp) stampUp.style.opacity = 0;
+                    Object.values(edgeHints).forEach(h => { if(h) h.classList.remove('highlight'); });
+                    return; 
+                }
+                
+                if (!isVertical) {
                     if (dx > threshold && state.swipeActions.right) { actionToTake = state.swipeActions.right.action; throwX = window.innerWidth; }
                     else if (dx < -threshold && state.swipeActions.left) { actionToTake = state.swipeActions.left.action; throwX = -window.innerWidth; }
                 } else {
@@ -1156,6 +1240,7 @@
 
                 if (actionToTake) {
                     vib(10);
+                    try { AudioSys.playCardSlide(); } catch(e) {}
                     card.style.transition = 'transform 0.3s ease-out'; card.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${throwX * 0.05}deg)`;
                     Object.values(edgeHints).forEach(h => { if(h) h.classList.remove('highlight'); }); 
                     setTimeout(() => triggerAction(actionToTake), 300); 
@@ -1169,12 +1254,57 @@
                 }
             }
 
-            card.addEventListener('mousedown', e => { isDragging = true; startX = e.clientX; startY = e.clientY; card.style.transition = 'none'; }, { signal });
-            window.addEventListener('mousemove', e => { if (!isDragging) return; let dx = e.clientX - startX; let dy = e.clientY - startY; card.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx * 0.03}deg)`; updateHintVisuals(dx, dy); }, { signal });
-            window.addEventListener('mouseup', e => { if (!isDragging) return; isDragging = false; let dx = e.clientX - startX; let dy = e.clientY - startY; processSwipe(dx, dy); }, { signal });
-            card.addEventListener('touchstart', e => { isDragging = true; startX = e.touches[0].clientX; startY = e.touches[0].clientY; card.style.transition = 'none'; }, { passive: true, signal });
-            window.addEventListener('touchmove', e => { if (!isDragging) return; let dx = e.touches[0].clientX - startX; let dy = e.touches[0].clientY - startY; card.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx * 0.03}deg)`; updateHintVisuals(dx, dy); }, { passive: true, signal });
-            window.addEventListener('touchend', e => { if (!isDragging) return; isDragging = false; let dx = e.changedTouches[0].clientX - startX; let dy = e.changedTouches[0].clientY - startY; processSwipe(dx, dy); }, { signal });
+            const inputStart = (e) => {
+                startX = e.touches ? e.touches[0].clientX : e.clientX;
+                startY = e.touches ? e.touches[0].clientY : e.clientY;
+                isDragging = true;
+                isScrollGesture = false;
+                
+                let targetBody = e.target.closest('.card-body');
+                if (!(targetBody && targetBody.scrollHeight > targetBody.clientHeight + 5)) {
+                    card.style.transition = 'none';
+                }
+            };
+            
+            const inputMove = (e) => {
+                if (!isDragging) return;
+                let cx = e.touches ? e.touches[0].clientX : e.clientX;
+                let cy = e.touches ? e.touches[0].clientY : e.clientY;
+                let dx = cx - startX;
+                let dy = cy - startY;
+                
+                let targetBody = e.target.closest('.card-body');
+                if (targetBody && targetBody.scrollHeight > targetBody.clientHeight + 5 && !isScrollGesture) {
+                    // Lock gesture out of card-swipe logic if dragging vertically within scrollable text
+                    if (Math.abs(dy) > Math.abs(dx)) {
+                        isScrollGesture = true;
+                    } else if (Math.abs(dx) > 10) {
+                        card.style.transition = 'none'; 
+                    }
+                }
+
+                if (!isScrollGesture) {
+                    card.style.transform = `translate(${dx}px, ${dy}px) rotate(${dx * 0.03}deg)`;
+                    updateHintVisuals(dx, dy);
+                }
+            };
+            
+            const inputEnd = (e) => {
+                if (!isDragging) return;
+                isDragging = false;
+                if (!isScrollGesture) {
+                    let cx = e.changedTouches ? e.changedTouches[0].clientX : e.clientX;
+                    let cy = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+                    processSwipe(cx - startX, cy - startY);
+                }
+            };
+
+            card.addEventListener('mousedown', inputStart, { signal });
+            window.addEventListener('mousemove', inputMove, { signal });
+            window.addEventListener('mouseup', inputEnd, { signal });
+            card.addEventListener('touchstart', inputStart, { passive: true, signal });
+            window.addEventListener('touchmove', inputMove, { passive: true, signal });
+            window.addEventListener('touchend', inputEnd, { signal });
         }
     </script>
 </body>
