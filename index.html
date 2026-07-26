@@ -18,7 +18,7 @@
             --bg-color: #111312; 
             --card-bg: #1c211e;
             --text-main: #c4c9c5; 
-            --text-muted: #9ca6a0; /* Updated for better contrast */
+            --text-muted: #9ca6a0; 
             --accent-gold: #ffd257; 
             --danger-red: #ff5c5c; 
             --success-green: #7fd966;
@@ -112,7 +112,7 @@
             display: flex; flex-direction: column; 
             padding: max(20px, env(safe-area-inset-top)) 20px max(20px, env(safe-area-inset-bottom)) 20px;
             box-sizing: border-box; overflow-y: auto; overflow-x: hidden;
-            align-items: center; justify-content: flex-start;
+            align-items: center; justify-content: center;
             transition: opacity 0.4s ease;
         }
         .hidden { display: none !important; opacity: 0; pointer-events: none; }
@@ -132,9 +132,6 @@
         .primary-btn { background: var(--accent-gold); color: #111; font-size: 1em; font-weight: 800; padding: 16px; border: none; border-radius: 6px; cursor: pointer; text-transform: uppercase; transition: transform 0.1s; width: 100%; min-height: 48px; box-sizing: border-box; margin-top: 15px; letter-spacing: 1px;}
         .primary-btn:active { transform: scale(0.97); }
 
-        .tut-block { margin-bottom: 12px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 4px; border-left: 4px solid var(--accent-gold);}
-        .tut-block h3 { color: #e0e5e1; margin: 0 0 5px 0; font-size: 0.95em; text-transform: uppercase; letter-spacing: 1px;}
-        .tut-block p { color: var(--text-muted); margin: 0; font-size: 0.95em; line-height: 1.5; font-family: var(--font-story);}
         .diff-container { display: flex; flex-direction: column; gap: 10px; margin-top: auto; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto;}
 
         #end-title { font-size: clamp(2em, 8vw, 2.5em); font-weight: 800; text-align: center; margin-bottom: 10px; text-transform: uppercase; line-height: 1.1; color: var(--accent-gold); }
@@ -159,7 +156,9 @@
         #card-container { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; perspective: 1000px; padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); }
         
         .hint-label { position: absolute; font-family: var(--font-ui); font-size: 0.75em; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); z-index: 50; transition: all 0.2s; display: flex; align-items: center; justify-content: center; text-align: center; cursor: pointer; }
-        .hint-label:active { transform: scale(0.95); color: var(--text-main); }
+        .hint-label:active:not(.disabled) { transform: scale(0.95); color: var(--text-main); }
+        .hint-label.disabled { opacity: 0.2; pointer-events: none; }
+        
         #hint-up { top: 20px; left: 50%; transform: translateX(-50%); }
         #hint-down { bottom: max(20px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); }
         #hint-left { left: 10px; top: 50%; writing-mode: vertical-rl; text-orientation: mixed; transform: translateY(-50%) rotate(180deg); height: auto; }
@@ -174,6 +173,7 @@
             cursor: grab; transform-origin: 50% 100%; will-change: transform; z-index: 10;
         }
         .swipe-card:active { cursor: grabbing; }
+        
         .card-behind { position: absolute; width: 100%; max-width: 360px; height: 75vh; max-height: 700px; background: rgba(28, 33, 30, 0.5); border: 1px solid rgba(255, 255, 255, 0.02); border-radius: 8px; transform: scale(0.95) translateY(20px); z-index: 5;}
         
         .card-header { font-family: var(--font-ui); font-size: 0.75em; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin-bottom: 8px; font-weight: 800;}
@@ -215,34 +215,19 @@
 
     <canvas id="rain-canvas"></canvas>
 
-    <div id="prologue-screen" class="fullscreen-overlay hidden">
+    <div id="prologue-screen" class="fullscreen-overlay">
         <div class="overlay-card">
-            <div id="prologue-content"></div>
-            <button id="btn-to-tutorial" class="primary-btn">Review Mechanics</button>
-        </div>
-    </div>
-
-    <div id="tutorial-screen" class="fullscreen-overlay hidden">
-        <div class="overlay-card">
-            <div class="menu-title">THE MECHANICS</div>
-            <div class="menu-subtitle">A Detective's Work</div>
-            <div class="tut-block">
-                <h3>1. Geographical Friction</h3>
-                <p>Two random locations are inaccessible. Find utility items (Boots, Lantern, Key) to enter them.</p>
+            <div id="prologue-content">
+                <div class="menu-title">CHAPTER ONE</div>
+                <div class="menu-subtitle">A Damp Arrival in Horsley Abbots</div>
+                <div class="novel-text">
+                    <p>Stetson Hinchfliffe did not enter a room; he intruded upon it. Leaning heavily on a blackthorn cane that was three inches too short, forcing an aggressive stoop. Behind his ear sat his half-eaten cheddar and margarine sandwich.</p>
+                    <p>Every shadow in this village hides a secret. Every inhabitant is a liar. The environment itself is hostile.</p>
+                    <p>Stetson took a bite of his sandwich. It was time to go to work.</p>
+                </div>
             </div>
-            <div class="tut-block">
-                <h3>2. The Interrogation Web</h3>
-                <p>Every suspect holds 5 facts. A polite <b>Grunt</b> reveals up to 2 before they get annoyed. A <b>Deep Insult</b> reveals up to 2 more, but spikes Hostility. <b>Warning: Insulting the true Killer will massively spike their paranoia.</b> Eating your <b>Sandwich</b> lowers Hostility.</p>
-            </div>
-            <div class="tut-block">
-                <h3>3. The Grand Assembly</h3>
-                <p>When you pocket the weapon, return to the Crime Scene. The innocents perfectly corroborate each other's alibis. The killer's alibi will be a lie. Accuse the killer and their true motive.</p>
-            </div>
-            <div class="diff-container">
-                <button id="btn-easy" class="primary-btn diff-btn" style="background:var(--success-green); color:#111;">EASY (Tolerant Idiots)</button>
-                <button id="btn-normal" class="primary-btn diff-btn" style="background:var(--accent-gold); color:#111;">NORMAL (The Standard Scum)</button>
-                <button id="btn-hard" class="primary-btn diff-btn" style="background:var(--danger-red); color:#111;">HARD (A Perilous Hamlet)</button>
-            </div>
+            <button id="btn-new-game" class="primary-btn" onclick="showDifficulties()">Start Investigation</button>
+            <button id="btn-resume" class="primary-btn" style="background: var(--text-muted); display: none;" onclick="resumeGame()">Resume Case</button>
         </div>
     </div>
 
@@ -251,7 +236,7 @@
             <div id="end-subtitle">Bedfordshire Constabulary</div>
             <div id="end-title">DISCIPLINARY TRIBUNAL</div>
             <div id="end-desc"></div>
-            <button id="btn-restart" class="primary-btn">Accept Judgement & Restart</button>
+            <button id="btn-restart" class="primary-btn" onclick="location.reload()">Accept Judgement & Restart</button>
         </div>
     </div>
 
@@ -285,7 +270,7 @@
                 bgm.pause();
                 btn.innerText = '🔇';
             } else {
-                bgm.play();
+                bgm.play().catch(()=>{});
                 btn.innerText = '🔊';
             }
             musicPlaying = !musicPlaying;
@@ -293,29 +278,15 @@
 
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js')
-                    .then(reg => console.log('Service Worker registered'))
-                    .catch(err => console.log('Service Worker failed', err));
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW failed', err));
             });
         }
 
         const AudioSys = {
-            ctx: null, drone: null, gain: null, heartbeatInterval: null,
+            ctx: null, heartbeatInterval: null,
             init() {
                 if (this.ctx) return;
                 this.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                this.startDrone();
-            },
-            startDrone() {
-                if(!this.ctx) return;
-                this.drone = this.ctx.createOscillator();
-                this.drone.type = 'triangle';
-                this.drone.frequency.setValueAtTime(45, this.ctx.currentTime);
-                this.gain = this.ctx.createGain();
-                this.gain.gain.value = 0.05; 
-                this.drone.connect(this.gain);
-                this.gain.connect(this.ctx.destination);
-                this.drone.start();
             },
             playSmack() {
                 if(!this.ctx) return;
@@ -396,14 +367,14 @@
             turns: 0, currentContext: '', tempPayload: null, turnEvents: [],
             hasWeapon: false, hasMagnifier: false, inventory: [], murderSceneDepth: 3,
             murderRoomId: '', crimeSceneFound: false, gameOver: false, triggerKillerCorner: false,
-            suspicion: 0, maxSuspicion: 25, freeProbeChance: 0.15, isHunted: false, weaponTensionInterval: null,
-            sandwichBites: 3, frictions: {},
+            suspicion: 0, maxSuspicion: 25, isHunted: false, sandwichBites: 3, frictions: {},
             roomExamines: {}, playerRoomId: '5', suspects: [], items: [], swipeActions: {},
             stats: { moves: 0, searches: 0, probes: 0, insults: 0, wrongAccusations: 0, sandwichEaten: 0, pplSpoken: new Set(), escapes: 0 },
             tempAccused: null 
         };
 
         let currentSwipeController = null; 
+        let weaponTensionInterval = null;
         function shuffle(arr) { return [...arr].sort(() => 0.5 - Math.random()); }
         function getGridDistance(roomId1, roomId2) {
             let r1 = theme.rooms.findIndex(r => r.id === roomId1); let r2 = theme.rooms.findIndex(r => r.id === roomId2);
@@ -413,25 +384,59 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             Rain.init();
-            
-            document.getElementById('btn-to-tutorial').addEventListener('click', () => {
-                document.getElementById('prologue-screen').classList.add('hidden');
-                document.getElementById('tutorial-screen').classList.remove('hidden');
-            });
-            document.getElementById('btn-easy').addEventListener('click', () => startGame('easy'));
-            document.getElementById('btn-normal').addEventListener('click', () => startGame('normal'));
-            document.getElementById('btn-hard').addEventListener('click', () => startGame('hard'));
-            document.getElementById('btn-restart').addEventListener('click', () => {
-                document.getElementById('end-screen').classList.add('hidden');
-                initWorld(); 
-            });
-
-            initWorld(); 
+            if (localStorage.getItem('horsley_save')) {
+                document.getElementById('btn-resume').style.display = 'block';
+            }
         });
 
+        function showDifficulties() {
+            document.getElementById('prologue-content').innerHTML = `
+                <div class="menu-title">SELECT DIFFICULTY</div>
+                <div class="diff-container" style="margin-top:20px;">
+                    <button onclick="startGame('easy')" class="primary-btn diff-btn" style="background:var(--success-green); color:#111;">EASY (Tolerant Idiots)</button>
+                    <button onclick="startGame('normal')" class="primary-btn diff-btn" style="background:var(--accent-gold); color:#111;">NORMAL (The Standard Scum)</button>
+                    <button onclick="startGame('hard')" class="primary-btn diff-btn" style="background:var(--danger-red); color:#111;">HARD (A Perilous Hamlet)</button>
+                </div>
+            `;
+            document.getElementById('btn-new-game').style.display = 'none';
+            document.getElementById('btn-resume').style.display = 'none';
+        }
+
+        function saveState() {
+            if (state.gameOver) {
+                localStorage.removeItem('horsley_save');
+                return;
+            }
+            const s = { ...state, swipeActions: null, stats: { ...state.stats, pplSpoken: Array.from(state.stats.pplSpoken) } };
+            localStorage.setItem('horsley_save', JSON.stringify(s));
+        }
+
+        function resumeGame() {
+            const saved = localStorage.getItem('horsley_save');
+            if (saved) {
+                try { AudioSys.init(); } catch(e) {}
+                document.getElementById('prologue-screen').classList.add('hidden');
+                
+                const s = JSON.parse(saved);
+                Object.assign(state, s);
+                state.stats.pplSpoken = new Set(state.stats.pplSpoken);
+                
+                const bgm = document.getElementById('bgm');
+                if (musicPlaying) bgm.play().catch(()=>{});
+
+                if (state.hasWeapon && !state.gameOver) {
+                    document.body.classList.add('jeopardy-active');
+                    weaponTensionInterval = setInterval(() => { vib([50, 40]); }, 300);
+                }
+                
+                updateHUD();
+                generateCard(state.currentContext, state.tempPayload);
+            }
+        }
+
         function initWorld() {
-            if (state.weaponTensionInterval) clearInterval(state.weaponTensionInterval);
-            state.weaponTensionInterval = null;
+            if (weaponTensionInterval) clearInterval(weaponTensionInterval);
+            weaponTensionInterval = null;
 
             state.turns = 0; state.suspicion = 0; state.hasWeapon = false; state.hasMagnifier = false; state.inventory = [];
             state.gameOver = false; state.crimeSceneFound = false; state.turnEvents = []; state.triggerKillerCorner = false;
@@ -547,38 +552,24 @@
             });
 
             state.suspects = shuffle(state.suspects); 
-            renderPrologue();
-        }
-
-        function renderPrologue() {
-            let html = `
-                <div class="menu-title">CHAPTER ONE</div>
-                <div class="menu-subtitle">A Damp Arrival in Horsley Abbots</div>
-                <div class="novel-text">
-                    <p>Stetson Hinchfliffe did not enter a room; he intruded upon it. Leaning heavily on a blackthorn cane that was three inches too short, forcing an aggressive stoop. Behind his ear sat his half-eaten cheddar and margarine sandwich.</p>
-                    <p>He had been summoned to Horsley Abbots. The victim was Lord Reginald Blackwood. Stetson reviewed the coroner's brief: <strong class="danger-text">${state.causeOfDeath.desc}</strong></p>
-                    <p>Every shadow in this village hides a secret. Every inhabitant is a liar. The environment itself is hostile.</p>
-                    <p>Stetson took a bite of his sandwich. It was time to go to work.</p>
-                </div>
-            `;
-            document.getElementById('prologue-content').innerHTML = html;
-            document.getElementById('prologue-screen').classList.remove('hidden');
         }
 
         function startGame(diff) {
-            try { AudioSys.init(); } catch(e) { console.log('Audio init skipped'); }
-            document.getElementById('tutorial-screen').classList.add('hidden');
+            try { AudioSys.init(); } catch(e) {}
+            document.getElementById('prologue-screen').classList.add('hidden');
             if (diff === 'easy') { state.maxSuspicion = 45; }
             else if (diff === 'normal') { state.maxSuspicion = 30; }
             else { state.maxSuspicion = 20; }
             
+            initWorld();
+            
+            state.turnEvents.push("<strong style='color:var(--text-main);'>TUTORIAL: Swipe the card Left or Right to investigate and scrutinise. Swipe Up to move to new locations. Swipe Down to interrogate.</strong>");
+
             document.getElementById('btn-sandwich').classList.remove('disabled');
             document.body.classList.remove('jeopardy-active');
             
             const bgm = document.getElementById('bgm');
-            if (musicPlaying) {
-                bgm.play().catch(e => console.log('Audio autoplay blocked by browser'));
-            }
+            if (musicPlaying) bgm.play().catch(()=>{});
 
             updateHUD(); generateCard('room_idle');
         }
@@ -652,13 +643,40 @@
                 if (actionData) { 
                     el.style.display = 'flex'; 
                     el.innerText = dir === 'right' ? actionData.text + symbols[dir] : symbols[dir] + actionData.text; 
-                    el.onclick = () => { vib(10); triggerAction(actionData.action); }; 
+                    el.onclick = () => { if(!el.classList.contains('disabled')) animateSwipeAndTrigger(dir, actionData.action); }; 
                 } else { 
                     el.style.display = 'none'; 
                     el.innerText = ''; 
                     el.onclick = null; 
                 }
             });
+        }
+
+        function animateSwipeAndTrigger(dir, actionFunc) {
+            const card = document.getElementById('active-card');
+            if(!card) return;
+            vib(10);
+            let throwX = 0, throwY = 0;
+            if(dir==='left') throwX = -window.innerWidth;
+            if(dir==='right') throwX = window.innerWidth;
+            if(dir==='up') throwY = -window.innerHeight;
+            if(dir==='down') throwY = window.innerHeight;
+
+            card.style.transition = 'transform 0.3s ease-out';
+            card.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${throwX * 0.05}deg)`;
+
+            const behind = document.querySelector('.card-behind');
+            if(behind) {
+                behind.style.transition = 'all 0.3s ease-out';
+                behind.style.transform = 'scale(1) translateY(0)';
+                setTimeout(() => {
+                    behind.style.transition = 'none';
+                    behind.style.transform = 'scale(0.95) translateY(20px)';
+                }, 300);
+            }
+
+            try { AudioSys.playCardSlide(); } catch(e) {}
+            setTimeout(() => triggerAction(actionFunc), 300);
         }
 
         function advanceTurn() {
@@ -837,7 +855,9 @@
                 if (payload.isStart) {
                     state.stats.pplSpoken.add(s.name);
                     if (!s.hasMet) { 
-                        responseHtml = `<div class="desc-text">${s.name}, ${s.role}.</div><p>${s.dialogue.meetFirst}</p>`; 
+                        responseHtml = `<div class="desc-text">${s.name}, ${s.role}.</div>
+                        <div class="sys-text" style="color:var(--accent-gold); margin-bottom:10px;">TUTORIAL: Swipe Left for a safe, polite Grunt. Swipe Right to Insult them for deeper secrets, but it will raise Hostility.</div>
+                        <p>${s.dialogue.meetFirst}</p>`; 
                         s.hasMet = true; 
                     } else { 
                         responseHtml = `<p>${s.dialogue.meetAgain}</p>`; 
@@ -921,6 +941,7 @@
 
             updatePersistentHints();
             renderCardDOM(html, context);
+            saveState();
         }
 
         function doMoveSelect() { state.stats.moves++; generateCard('move_select'); }
@@ -1052,8 +1073,8 @@
             document.body.classList.add('jeopardy-active');
             AudioSys.setHeartbeat(false);
             
-            if (state.weaponTensionInterval) clearInterval(state.weaponTensionInterval);
-            state.weaponTensionInterval = setInterval(() => { vib([50, 40]); }, 300);
+            if (weaponTensionInterval) clearInterval(weaponTensionInterval);
+            weaponTensionInterval = setInterval(() => { vib([50, 40]); }, 300);
 
             advanceTurn(); 
             if(!state.gameOver) generateCard('room_idle'); 
@@ -1084,7 +1105,7 @@
         }
 
         function doFinalAccusation(suspect, motive) {
-            if (state.weaponTensionInterval) clearInterval(state.weaponTensionInterval);
+            if (weaponTensionInterval) clearInterval(weaponTensionInterval);
             
             if (suspect.isMurderer && motive === suspect.motive) {
                 AudioSys.setHeartbeat(false);
@@ -1107,7 +1128,7 @@
 
         function endGame(isWin, desc) {
             state.gameOver = true; document.body.classList.remove('jeopardy-active'); AudioSys.setHeartbeat(false);
-            if (state.weaponTensionInterval) { clearInterval(state.weaponTensionInterval); state.weaponTensionInterval = null; }
+            if (weaponTensionInterval) { clearInterval(weaponTensionInterval); weaponTensionInterval = null; }
             
             let baseScore = isWin ? 1000 : 200;
             let pScore = Math.max(0, baseScore - (state.turns * 10) - (state.stats.wrongAccusations * 250) + ((3-state.sandwichBites) * 50) + (state.stats.escapes * 100));
@@ -1139,6 +1160,7 @@
 
             document.getElementById('end-desc').innerHTML = desc + statsHtml;
             document.getElementById('end-screen').classList.remove('hidden');
+            saveState(); // Save state as game over clears it
         }
 
         function renderCardDOM(html, context) {
@@ -1150,7 +1172,6 @@
             card.className = 'swipe-card'; 
             card.id = 'active-card'; 
             
-            // Add educational pulse to the very first location card
             if (state.turns === 0 && context === 'room_idle') {
                 card.classList.add('pulse-hint');
             }
@@ -1189,11 +1210,18 @@
             let cardBody = card.querySelector('.card-body');
             let needsScroll = cardBody && cardBody.scrollHeight > cardBody.clientHeight + 5;
             let hasRead = !needsScroll;
+
+            if (needsScroll && !hasRead) {
+                if (edgeHints.up && state.swipeActions.up) edgeHints.up.classList.add('disabled');
+                if (edgeHints.down && state.swipeActions.down) edgeHints.down.classList.add('disabled');
+            }
             
             if (needsScroll) {
                 cardBody.addEventListener('scroll', () => {
                     if (cardBody.scrollTop + cardBody.clientHeight >= cardBody.scrollHeight - 5) {
                         hasRead = true;
+                        if (edgeHints.up) edgeHints.up.classList.remove('disabled');
+                        if (edgeHints.down) edgeHints.down.classList.remove('disabled');
                     }
                 }, { signal });
             }
@@ -1218,7 +1246,6 @@
                 let actionToTake = null; let throwX = 0, throwY = 0;
                 let isVertical = Math.abs(dy) > Math.abs(dx);
                 
-                // Enforce reading for vertical swipes on heavy text cards
                 if (isVertical && !hasRead) {
                     card.style.transition = 'transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'; 
                     card.style.transform = 'translate(0px, 0px) rotate(0deg)';
@@ -1242,6 +1269,17 @@
                     vib(10);
                     try { AudioSys.playCardSlide(); } catch(e) {}
                     card.style.transition = 'transform 0.3s ease-out'; card.style.transform = `translate(${throwX}px, ${throwY}px) rotate(${throwX * 0.05}deg)`;
+                    
+                    const behind = document.querySelector('.card-behind');
+                    if(behind) {
+                        behind.style.transition = 'all 0.3s ease-out';
+                        behind.style.transform = 'scale(1) translateY(0)';
+                        setTimeout(() => {
+                            behind.style.transition = 'none';
+                            behind.style.transform = 'scale(0.95) translateY(20px)';
+                        }, 300);
+                    }
+
                     Object.values(edgeHints).forEach(h => { if(h) h.classList.remove('highlight'); }); 
                     setTimeout(() => triggerAction(actionToTake), 300); 
                 } else {
@@ -1275,7 +1313,6 @@
                 
                 let targetBody = e.target.closest('.card-body');
                 if (targetBody && targetBody.scrollHeight > targetBody.clientHeight + 5 && !isScrollGesture) {
-                    // Lock gesture out of card-swipe logic if dragging vertically within scrollable text
                     if (Math.abs(dy) > Math.abs(dx)) {
                         isScrollGesture = true;
                     } else if (Math.abs(dx) > 10) {

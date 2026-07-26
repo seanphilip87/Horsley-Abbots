@@ -108,24 +108,24 @@ const suspectArchetypes = [
         gender: "female", 
         desc: "A matronly, severe woman with faded blue tattoos of anchors and swallows sprawling down her thick forearms. She smells strongly of stale stout, cheap bleach, and stale tobacco.",
         dialogue: {
-            meetFirst: "Stetson leaned against the sticky bar. The Barmaid aggressively scrubbed a dirty pint glass with an even dirtier rag. 'Shut your cake-hole, detective,' she barked in a faux-Essex drawl. 'I’ve got kegs to change and zero time for old bill.'",
-            meetAgain: "Stetson tapped a coin on the bar. The Barmaid didn't look up from the till. 'You taking up permanent residence, mush? Buy a packet of scratchings or sling your hook.'",
+            meetFirst: "Stetson winced at the woman standing on his foot in front of him. The Barmaid was aggressively scrubbing a dirty pint glass with an even dirtier rag. 'Shut your cake-hole, detective,' she barked in a faux-Essex drawl. 'I’ve got kegs to change and zero time for old bill.'",
+            meetAgain: "Stetson tapped two coins together. The Barmaid didn't look up. 'You taking up permanent residence, mush? Buy a packet of scratchings or sling your hook.'",
             politeWrappers: [
-                "She leaned over the beer pumps, lowering her voice. 'Listen, what goes on in my pub stays in my pub... usually. But {info}'",
+                "She leaned close, the smell of Bacon Fries on her lowered voice. 'Listen, what goes on in my pub stays in my pub... usually. But {info}'",
                 "She threw the dirty rag over her shoulder. 'People talk when they're three pints deep in my discount bitter. I ain't deaf. {info}'"
             ],
             insultWrappers: [
                 {
                     stetson: "Stetson coughed wetly into his hand. 'Your hygiene is a public menace, and the swill you serve tastes like drainage water from the Churchyard.'",
-                    response: "She slammed a heavy fist onto the bar, rattling the optics. 'You cheeky bastard! Try running a pub in this godforsaken hole! Fine, you want dirt? Have it: {info}'"
+                    response: "She rattled a heavy fist into the air. 'You cheeky bastard! Try running a pub in this godforsaken hole! Fine, you want dirt? Have it: {info}'"
                 },
                 {
                     stetson: "Stetson took a bite of his rancid sandwich. 'A miserable pub run by a miserable woman covering for a miserable killer. Spill it.'",
                     response: "Her eyes narrowed to furious slits, the faux-Essex accent entirely gone. 'Don't you dare judge me, you trench-coated freak. Listen good, because I'll only say this once: {info}'"
                 }
             ],
-            clamNormal: "'Right, that's it!' she yelled, pointing a meaty finger at the door. 'You're barred! Squeeze your pathetic little frame out of my pub before I call the lads!'",
-            clamDeep: "The Barmaid silently reached beneath the counter. Stetson heard the heavy thud of a wooden baseball bat hitting the floorboards. She simply stared at him, her eyes completely dead. It was time to leave.",
+            clamNormal: "'Right, that's it!' she yelled, pointing a meaty finger at Stetson. 'You're barred! Squeeze your pathetic little frame out of my face before I call the lads!'",
+            clamDeep: "The Barmaid silently reached behind her. Stetson heard the heavy thud of a wooden baseball bat hitting the floorboards. She simply stared at him, her eyes completely dead. It was time to leave.",
             formatGossip: "I probably shouldn't say, but {target} {gossip}. Messy business.",
             formatKnownMotive: "Word travels fast when the locals get loose lips. Everyone knows {target} had a bone to pick: {motive}",
             formatKnownAlibi: "A load of old cobblers, if you ask me. {target} claims: '{alibi}'. Yeah, right. And I'm the Queen of Sheba.",
