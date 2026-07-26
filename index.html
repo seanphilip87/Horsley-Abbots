@@ -146,15 +146,6 @@
         .sandwich-btn { background: rgba(255, 210, 87, 0.15); border: 1px solid var(--accent-gold); padding: 8px 12px; border-radius: 6px; color: var(--accent-gold); cursor: pointer; display: flex; align-items: center; gap: 5px; min-height: 38px; transition: all 0.2s; z-index: 100;}
         .sandwich-btn:active { transform: scale(0.9); }
         .sandwich-btn.disabled { opacity: 0.3; pointer-events: none; border-color: var(--text-muted); color: var(--text-muted); }
-        
-        #mini-map { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; padding: 10px 20px 15px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); max-width: 450px; margin: 0 auto; width: 100%; box-sizing: border-box; flex: 0 0 auto; position: relative; z-index: 10; }
-        .map-room { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 6px 4px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; min-height: 60px; transition: all 0.3s; position: relative; }
-        .map-room.active { background: rgba(255, 210, 87, 0.1); border-color: var(--accent-gold); box-shadow: 0 0 10px rgba(255, 210, 87, 0.15); }
-        .rm-name { font-size: clamp(0.5em, 2.5vw, 0.6em); color: var(--text-muted); font-family: var(--font-ui); text-transform: uppercase; letter-spacing: 0.5px; width: 100%; text-align: center; white-space: normal; line-height: 1.2; margin-bottom: 4px; flex-grow: 1; display: flex; align-items: center; justify-content: center;}
-        .map-room.active .rm-name { color: var(--accent-gold); font-weight: 800; }
-        .map-dots { display: flex; gap: 4px; margin-top: auto; padding-bottom: 2px; flex-wrap: wrap; justify-content: center; width: 100%; box-sizing: border-box;}
-        .map-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.8);}
-        .map-dot.player { background: var(--accent-gold); box-shadow: 0 0 6px var(--accent-gold); width: 8px; height: 8px; border: 1px solid #111;}
 
         #card-container { flex: 1; position: relative; display: flex; justify-content: center; align-items: center; overflow: hidden; perspective: 1000px; padding: 20px; padding-bottom: max(20px, env(safe-area-inset-bottom)); }
         
@@ -166,7 +157,7 @@
         #hint-right { right: 10px; top: 50%; writing-mode: vertical-rl; text-orientation: mixed; transform: translateY(-50%); height: auto; }
 
         .swipe-card {
-            position: absolute; width: 100%; max-width: 340px; height: 62vh; max-height: 600px;
+            position: absolute; width: 100%; max-width: 360px; height: 75vh; max-height: 700px;
             background: linear-gradient(145deg, #1f2521, #181d1a);
             border: 1px solid #2a332d; border-radius: 8px;
             box-shadow: 0 25px 50px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.03);
@@ -174,7 +165,7 @@
             cursor: grab; transform-origin: 50% 100%; will-change: transform; z-index: 10;
         }
         .swipe-card:active { cursor: grabbing; }
-        .card-behind { position: absolute; width: 100%; max-width: 340px; height: 62vh; max-height: 600px; background: rgba(28, 33, 30, 0.5); border: 1px solid rgba(255, 255, 255, 0.02); border-radius: 8px; transform: scale(0.95) translateY(20px); z-index: 5;}
+        .card-behind { position: absolute; width: 100%; max-width: 360px; height: 75vh; max-height: 700px; background: rgba(28, 33, 30, 0.5); border: 1px solid rgba(255, 255, 255, 0.02); border-radius: 8px; transform: scale(0.95) translateY(20px); z-index: 5;}
         
         .card-header { font-family: var(--font-ui); font-size: 0.75em; text-transform: uppercase; letter-spacing: 2px; color: var(--accent-gold); margin-bottom: 8px; font-weight: 800;}
         .card-title { font-size: clamp(1.8em, 7vw, 2.2em); font-weight: 700; color: var(--text-main); margin-bottom: 15px; line-height: 1.1; }
@@ -187,7 +178,7 @@
         .danger-text { color: var(--danger-red); font-weight: 700; text-shadow: 0 0 5px rgba(255,92,92,0.3); }
         .sys-text { color: var(--text-muted); font-family: var(--font-ui); font-size: 0.85em; text-transform: uppercase; letter-spacing: 1px;}
         
-        .card-img-container { width: 100%; height: 160px; border-radius: 6px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
+        .card-img-container { width: 100%; height: 200px; border-radius: 6px; overflow: hidden; margin-bottom: 15px; border: 1px solid rgba(255,255,255,0.05); flex-shrink: 0; }
         .card-img { width: 100%; height: 100%; object-fit: cover; }
 
         .swipe-stamp {
@@ -258,8 +249,6 @@
             <div id="btn-sandwich" class="sandwich-btn" onclick="eatSandwich()">🥪 <span id="sandwich-count">3</span></div>
         </div>
     </div>
-    
-    <div id="mini-map"></div>
 
     <div id="card-container">
         <div id="hint-up" class="hint-label"></div>
@@ -561,7 +550,6 @@
             document.getElementById('btn-sandwich').classList.remove('disabled');
             document.body.classList.remove('jeopardy-active');
             
-            // Start the theme music
             const bgm = document.getElementById('bgm');
             if (musicPlaying) {
                 bgm.play().catch(e => console.log('Audio autoplay blocked by browser'));
@@ -600,16 +588,6 @@
             else if (ratio < 0.75) { susEl.innerText = "VEXED"; susEl.style.color = "var(--accent-gold)"; AudioSys.setHeartbeat(false); }
             else if (ratio < 1.0 && !state.isHunted) { susEl.innerText = "ENRAGED"; susEl.style.color = "orange"; AudioSys.setHeartbeat(false); }
             else { susEl.innerText = "CRITICAL"; susEl.style.color = "var(--danger-red)"; AudioSys.setHeartbeat(true); }
-
-            const mapHtml = theme.rooms.map(r => {
-                let isHere = r.id === state.playerRoomId;
-                let roomSuspects = state.suspects.filter(s => s.roomId === r.id);
-                let dotsHtml = '';
-                if (isHere) dotsHtml += `<div class="map-dot player"></div>`;
-                roomSuspects.forEach(s => { dotsHtml += `<div class="map-dot" style="background:${s.clammed ? '#333' : s.color}"></div>`; });
-                return `<div class="map-room ${isHere ? 'active' : ''}"><span class="rm-name">${r.name}</span><div class="map-dots">${dotsHtml}</div></div>`;
-            }).join('');
-            document.getElementById('mini-map').innerHTML = mapHtml;
         }
 
         function updatePersistentHints() {
