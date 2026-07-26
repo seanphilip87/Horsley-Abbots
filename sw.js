@@ -1,11 +1,37 @@
-const CACHE_NAME = 'horsley-v2'; // Bumped version to force an update
+const CACHE_NAME = 'horsley-v3'; // Bumped version to force an update
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
-    './data.js',           // The new narrative engine!
+    './data.js',           
     './manifest.json',
     './icon-192.png',
-    './icon-512.png'
+    './icon-512.png',
+    // Newly added assets
+    './assets/village_hall.png',
+    './assets/gloved_fist.png',
+    './assets/churchyard.png',
+    './assets/manor_house.png',
+    './assets/mini_mart.png',
+    './assets/play_park.png',
+    './assets/faffingdales.png',
+    './assets/peacocks_queef.png',
+    './assets/cricket_pavilion.png',
+    './assets/barmaid.png',
+    './assets/vicar.png',
+    './assets/chef.png',
+    './assets/butcher.png',
+    './assets/minimart_owner.png',
+    './assets/busybody.png',
+    './assets/cleaver.png',
+    './assets/gin_bottle.png',
+    './assets/flapjack.png',
+    './assets/stump.png',
+    './assets/fan_belt.png',
+    './assets/bell_pull.png',
+    './assets/wellies.png',
+    './assets/iron_key.png',
+    './assets/lantern.png',
+    './assets/theme.mp3'
 ];
 
 // Install the service worker and cache everything
